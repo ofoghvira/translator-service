@@ -38,6 +38,19 @@ pip install -r requirements.txt
 
 [requirements.txt](./requirements.txt)
 
+## ⚠️ Important Note about Model Download
+
+If the model does not load for you or you encounter any model-related errors,
+make sure to run the helper script [`ensure_model.py`](./src/model/ensure_model.py).
+This script will automatically download the required model
+(**facebook/nllb-200-distilled-600M**) from Hugging Face Hub.
+
+- The model will be cached locally inside
+  `src/model/nllb-200-distilled-600M/`.
+- You do **not** need to manually place the weights in the repository.
+- Make sure you have internet access during the first run; subsequent
+  runs will use the cached copy.
+
 2.  **Run the Streamlit app**:
 
 ``` bash
