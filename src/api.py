@@ -1,4 +1,4 @@
-# api.py (Flask version)
+
 from typing import List, Dict, Optional
 from flask import Flask, request, jsonify
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
@@ -9,10 +9,9 @@ MODEL_PATH = "model/nllb-200-distilled-600M"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MAX_TOKENS = 512
 
-# Map human-friendly language codes to NLLB codes
-# Note: "ge" is mapped to German to match the sample PDF.
+
 NLLB_LANG: Dict[str, str] = {
-    "fa": "pes_Arab",   # or "fas_Arab" depending on your tokenizer
+    "fa": "pes_Arab",
     "ar": "arb_Arab",
     "tr": "tur_Latn",
     "es": "spa_Latn",
@@ -81,9 +80,6 @@ def _translate_text(txt: str, tgt_lang_code: str) -> str:
     return out
 
 # -------- Routes --------
-@app.route("/health", methods=["GET"])
-def health_check():
-    return jsonify({"status": "ok", "device": DEVICE, "model": str(MODEL_PATH)})
 
 @app.route("/translate", methods=["POST"])
 def translate():
@@ -130,6 +126,5 @@ def translate():
         return jsonify({"detail": f"Unexpected error: {e}"}), 500
 
 if __name__ == "__main__":
-    # For production, use a WSGI server like gunicorn:
-    # gunicorn -w 2 -b 0.0.0.0:8000 api:app
+
     app.run(host="0.0.0.0", port=8000, debug=False)
